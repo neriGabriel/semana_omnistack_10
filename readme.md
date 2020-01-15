@@ -2,8 +2,8 @@ MÉTODOS HTTP: GET, POST, PUT, DELETE
 
 TIPOS DE PARAMETROS:
 query params: req.query  (Filtros, ordenação, paginação, ...) -> params no postman
-route params: req.params (Identificar recurso na alteração ou remoção) -> url no postman
-body: req.body (dados para criação ou alteração de registro)
+<br>route params: req.params (Identificar recurso na alteração ou remoção) -> url no postman
+<br>body: req.body (dados para criação ou alteração de registro)
 
 app.get('/', (request, response) => {
     return response.json({"mensagem":"Olá"});
