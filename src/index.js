@@ -1,5 +1,6 @@
 const express  = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const routes   = require('./routes.js');
 
 //defino que usarei o express
@@ -10,6 +11,10 @@ mongoose.connect('mongodb+srv://neriGabriel:a10112013g@cluster0-0uek6.mongodb.ne
     useNewUrlParser: true, 
     useUnifiedTopology: true
 });
+
+/*TEM QUE SER NESSA ORDEM*/
+//permitir acesso de outras ports
+app.use(cors());
 
 //falo pro express que usarei json
 app.use(express.json());
