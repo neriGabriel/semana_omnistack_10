@@ -1,5 +1,7 @@
+//IMPORT DO MONGOOSE
 const mongoose = require('mongoose');
 
+//CRIANDO UM MODELO DE SCHEMA
 const PointSchema = new mongoose.Schema({
     type: {
         type: String,
@@ -12,4 +14,5 @@ const PointSchema = new mongoose.Schema({
     }
 });
 
+//EXPORTANDO O MODELO POINTSCHEMA
 module.exports = PointSchema;

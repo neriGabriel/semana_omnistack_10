@@ -1,6 +1,11 @@
+//IMPORT DO MONGOOSE
 const mongoose = require('mongoose');
+
+//IMPORT DO SCHEMA POINTS
 const PointSchema = require('./utils/PointSchema');
 
+
+//DEFINIÇÃO DA 'ENTIDADE' DEVSCHEMA
 const DevSchema = new mongoose.Schema({
     name:            String,
     github_username: String,
@@ -13,4 +18,5 @@ const DevSchema = new mongoose.Schema({
     }
 });
 
+//EXPORTANDO A ENTIDADE DEV
 module.exports = mongoose.model('Dev', DevSchema);
