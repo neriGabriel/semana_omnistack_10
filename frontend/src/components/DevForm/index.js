@@ -1,3 +1,5 @@
+//COMPONENTE <DevForm /> -> o nome pode ser index.js pq o proprio react reconhece quando faz import
+//assim não precisando impart dir/file.js
 import React, {useState, useEffect} from 'react';
 
 function DevForm({ onSubmit }) {
