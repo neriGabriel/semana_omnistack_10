@@ -14,8 +14,10 @@ import './Main.css';
 // Toda função que é do proprio componente é criado dentro dele mesmo
 
 function App() {
+  //VARIAVEL PARA SETAR O DEV
   const [devs, setDevs] = useState([]);
 
+  //FUNÇÃO PARA DETECTAR ALTERAÇÃO DOS DEVS E LISTAR TODOS
   useEffect(() => {
     async function loadDevs() {
       const response = await api.get('/devs');
@@ -25,11 +27,14 @@ function App() {
     loadDevs();
   }, []);
 
+  //FUNÇÃO PARA ADD UM DEV
   async function handleAddDev(data) {
     const response = await api.post('/devs', data);
     setDevs([...devs, response.data]);
   }
 
+  // <DevForm /> -> componente
+  // <DevItem /> -> componente
   return (
     <div id='app'>
       <aside>
