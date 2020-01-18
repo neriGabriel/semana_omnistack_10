@@ -5,6 +5,8 @@ const Dev = require('../models/Dev');
 //IMPORT DA FUNÇÃO PARA TRANSFORMAR UMA STRING EM ARRAY
 const parseStringAsArray = require('../utils/parseStringAsArray');
 
+const {findConnections, sendMessage} = require('../websocket');
+
 //INDEX, SHOW, STORE, UPDATE, DESTROU
 module.exports = {
     //MÉTODO INDEX : LISTAR TODOS
@@ -50,6 +52,13 @@ module.exports = {
             });
             
             //PARA VERIFICAR SE FOI SALVO É SÓ ACESSAR O MONGODB COMPASS
+
+            //FILTRAS AS CONEXÕES PARA O WEBSOCKET QUE ESTÃO HÁ NO MAXIMO 10KM DE DISTANCIA E QUE POSSUEM PELO MENOS UMA DAS TECNOGLOGIAS FILTRADAS
+            const sendSocketMessageTo = findConnections({
+                latitude, longitude
+            },techsArray);
+
+            sendMessage(sendSocketMessageTo, 'new-dev', dev);
         }
 
         //RETORNO UM JSON DO RESULTADO

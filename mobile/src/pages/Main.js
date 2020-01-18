@@ -5,7 +5,9 @@ import MapView, { Marker, Callout } from 'react-native-maps';
 import {requestPermissionsAsync , getCurrentPositionAsync} from 'expo-location';
 import {MaterialIcons} from '@expo/vector-icons'
 
-import api from '../services/api'
+import api from '../services/api';
+import {connect, disconnect, subscribeToNewDevs} from '../services/socket';
+
 
 function Main ({navigation}) {
     const [devs, setDevs] = useState([]);
@@ -34,18 +36,34 @@ function Main ({navigation}) {
         loadInitialPosition();
     }, []);
 
+    useEffect( () => {
+        subscribeToNewDevs(dev => setDevs([...devs, dev]));
+    }, [devs]);
+
+    function setUptWebSocket() {
+        const {latitude, longitude } = currentRegion;
+        connect(
+            latitude,
+            longitude,
+            techs,
+        );
+    }
+
     async function loadDevs() {
+        disconnect();
+
         const { latitude, longitude } = currentRegion;
 
         const response = await api.get('/search', {
             params: {
-                latitude,
-                longitude,
-                techs
+                latitude: '-27.7897', 
+                longitude: '-49.98997',
+                tecnologias: techs
             }
-        });
+        }).catch(err => console.log(err));
 
-        setDevs(response.data.devs);
+        setDevs(response.data);
+        setUptWebSocket();
     }   
 
     function handleRegionChanged(region) {
@@ -60,7 +78,7 @@ function Main ({navigation}) {
         <>
             <MapView onRegionChangeComplete={handleRegionChanged} initialRegion={currentRegion} style={styles.map}>
                {devs.map(dev => (
-                    <Marker key={dev._id} coordinate={{ longitude: dev.location.coordinate[1], latitude: dev.location.coordinate[0]}}>
+                    <Marker key={dev._id} coordinate={{ longitude: dev.location.coordinates[1], latitude: dev.location.coordinates[0]}}>
                     <Image style={styles.avatar} source={{ uri: dev.avatar_url}} />
                     <Callout onPress={() => {
                         //navegação
